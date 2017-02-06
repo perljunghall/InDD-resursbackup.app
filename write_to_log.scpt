@@ -33,7 +33,7 @@ end run
 --» HANDLERS
 -----------------------------------------
 
--- Skriv till logg
+-- Write to logfile
 on doWriteToLog(myLog, myLogFolder, myLogFile)
 	if myLog is "" then return
 	my doShellScript(("mkdir -p " & quoted form of POSIX path of myLogFolder))
@@ -52,7 +52,7 @@ on doWriteToLog(myLog, myLogFolder, myLogFile)
 	end try
 end doWriteToLog
 
--- Rotera loggfil
+-- Rotate logfile
 on doMakeNewLogFile(myLogFile)
 	get myLogFile
 	try
@@ -67,14 +67,14 @@ on doMakeNewLogFile(myLogFile)
 	do shell script "mv " & quoted form of POSIX path of myLogFile & " " & quoted form of POSIX path of ((myLogFile & ".1") as string)
 end doMakeNewLogFile
 
--- Kolla filstorlek
+-- Check size of logfile
 on doGetFileSize(theInput)
 	if theInput contains ":" then set theInput to POSIX path of theInput
 	do shell script ("touch " & quoted form of POSIX path of theInput)
 	return (do shell script "stat -f '%z' " & quoted form of POSIX path of theInput)
 end doGetFileSize
 
--- Utför skript
+-- Execute
 on doShellScript(theCurrentScript)
 	try
 		return {true, do shell script theCurrentScript}
