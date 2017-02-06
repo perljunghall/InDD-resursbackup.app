@@ -35,14 +35,13 @@ end run
 
 -- Write to logfile
 on doWriteToLog(myLog, myLogFolder, myLogFile)
-	if myLog is "" then return
 	my doShellScript(("mkdir -p " & quoted form of POSIX path of myLogFolder))
 	if ((my doGetFileSize(myLogFile)) as number) > theMaximumLogFileSizeInBytes then (my doMakeNewLogFile(myLogFile))
 	my doShellScript(("touch " & quoted form of POSIX path of myLogFile))
 	try
 		close access file myLogFile
 	end try
-	-- Skriv logg:
+	-- Write:
 	try
 		set fileRef to (open for access myLogFile with write permission)
 		write myLog & return to fileRef starting at eof as «class utf8»
